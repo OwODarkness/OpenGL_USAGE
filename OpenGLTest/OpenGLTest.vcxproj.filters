@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VertexShader">
+      <UniqueIdentifier>{b8e4208d-7532-419e-9e8c-10ea9508e7fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FragmentShader">
+      <UniqueIdentifier>{7ea5e7f6-50f3-4697-b33d-6cca12075c74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{67cbc7f4-eb81-467e-9176-b927b436015c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{3074868a-d22f-435a-8ed5-564f32bd2bb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example">
+      <UniqueIdentifier>{4b2a5a44-31e7-4b16-958c-d8e3bec23e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\ExampleTriangle">
+      <UniqueIdentifier>{f0a433fb-f9ae-497e-8fb8-658f54d9837b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\ExampleTexture">
+      <UniqueIdentifier>{bc893aae-0986-4d2b-a4e2-e36ce616b348}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\download\glad\src\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExampleTexture01.cpp">
+      <Filter>Example\ExampleTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="ExampleTriangle01.cpp">
+      <Filter>Example\ExampleTriangle</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleVertexShader.vs">
+      <Filter>Source Files\VertexShader</Filter>
+    </None>
+    <None Include="SimpleFragmentShader.fs">
+      <Filter>Source Files\FragmentShader</Filter>
+    </None>
+    <None Include="TriangleVertexShader.vs">
+      <Filter>Source Files\VertexShader</Filter>
+    </None>
+    <None Include="TriangleFragmentShader.fs">
+      <Filter>Source Files\FragmentShader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ShaderTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDefs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExampleTexture01.h">
+      <Filter>Example\ExampleTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="ExampleTriangle01.h">
+      <Filter>Example\ExampleTriangle</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Photo\container.jpg">
+      <Filter>Resource\Texture</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Photo\awesomeface.png">
+      <Filter>Resource\Texture</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
