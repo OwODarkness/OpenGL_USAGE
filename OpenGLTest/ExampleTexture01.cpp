@@ -88,9 +88,14 @@ void ExampleTexture01::run()
     shaderTool->setInt("texture2", 1); // 或者使用着色器类设置
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     GLMatrix* gl_mat = new GLMatrix(Eigen::Matrix4f::Identity());
-    Eigen::Vector3f v;
-    v << 1, 0, 0;
-    gl_mat->RotationWithAxis(45, v);
+    Eigen::Vector3f v1;
+    v1 << -0.1, -0.25, 0;
+    Eigen::Vector3f v2;
+    v2 << 0.1, 0.25, 0;
+    gl_mat->Translation(v1);
+    gl_mat->RotationWithAxis(30, {0,0,1});
+    gl_mat->Translation(v2);
+
 
     while (!glfwWindowShouldClose(window))
     {
