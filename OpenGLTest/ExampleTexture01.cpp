@@ -5,6 +5,8 @@
 #include "CommonUtils.h"
 #include "CommonDefs.h"
 #include "Eigen/Core"
+#include "TransTool.h"
+
 // settings
 using namespace gldef;
 ExampleTexture01::ExampleTexture01()
@@ -85,28 +87,10 @@ void ExampleTexture01::run()
     shaderTool->setInt("texture1", 0);
     shaderTool->setInt("texture2", 1); // 或者使用着色器类设置
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-    Eigen::Matrix4f transform;
-    Eigen::Matrix4f m1, m2,m3;
-    using namespace constval;
-    m1 <<
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1;
-    using namespace expression;
-    m2 <<
-        cos_45, -sin_45, 0, 0,
-        sin_45, cos_45, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1;
-    m3 <<
-        1, 0, 0, -0.5,
-        0, 1, 0, 0.5,
-        0, 0, 1, 0,
-        0, 0, 0, 1;
-    transform = m3;
-
+    GLMatrix* gl_mat = new GLMatrix(Eigen::Matrix4f::Identity());
+    Eigen::Vector3f v;
+    v << 1, 0, 0;
+    gl_mat->RotationWithAxis(45, v);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -119,7 +103,7 @@ void ExampleTexture01::run()
 
         unsigned int Loc = glGetUniformLocation(shaderProgram, "transform");
 
-        glUniformMatrix4fv(Loc, 1, GL_FALSE, &transform(0));
+        glUniformMatrix4fv(Loc, 1, GL_FALSE, gl_mat->GLMatFormat());
         glActiveTexture(GL_TEXTURE0); // 在绑定纹理之前先激活纹理单元
         glBindTexture(GL_TEXTURE_2D, texture1);
 

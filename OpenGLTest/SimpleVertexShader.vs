@@ -9,7 +9,7 @@ uniform mat4 transform;
 
 void main()
 {
-  gl_Position = transform * vec4(aPos,1.f);
+  gl_Position = transform * vec4(aPos,1.0);
   outColor = aColor;
   outTexCor = vec2(aTexCor.x,aTexCor.y);
 }

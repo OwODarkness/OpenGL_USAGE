@@ -1,4 +1,5 @@
 #include "ExampleTriangle01.h"
+#include <glad/glad.h>
 #include "OpenGLWindow.h"
 #include "CommonUtils.h"
 #include <iostream>

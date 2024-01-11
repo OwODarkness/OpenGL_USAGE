@@ -12,12 +12,12 @@ namespace constval {
 }
 namespace expression {
 	using namespace constval;
-	double cos_45 = cos(PI / 4);
-	double sin_45 = sin(PI / 4);
-	double cos_30 = cos(PI / 6);
-	double sin_30 = sin(PI / 6);
-	double cos_60 = cos(PI / 3);
-	double sin_60 = sin(PI / 3);
+	const double cos_45 = cos(PI / 4);
+	const double sin_45 = sin(PI / 4);
+	const double cos_30 = cos(PI / 6);
+	const double sin_30 = sin(PI / 6);
+	const double cos_60 = cos(PI / 3);
+	const double sin_60 = sin(PI / 3);
 }
 namespace gldef {
 	constexpr unsigned int SCR_WIDTH = 1600;

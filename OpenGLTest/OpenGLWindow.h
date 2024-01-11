@@ -9,7 +9,7 @@ public:
 	{
 		glfwTerminate();
 	}
-	GLFWwindow* CreateWindow(unsigned int window_width = 1600, unsigned int window_height = 1200, const char* name = "OpenGL tutorial");
+	GLFWwindow* CreateWindow(unsigned int window_width=1600, unsigned int window_height=1200, const char* name = "OpenGL tutorial");
 private:
 	GLFWwindow* window;
 };
