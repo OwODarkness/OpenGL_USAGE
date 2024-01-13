@@ -4,9 +4,7 @@
 #include "OpenGLWindow.h"
 #include "CommonUtils.h"
 #include "CommonDefs.h"
-#include "Eigen/Core"
 #include "TransTool.h"
-
 // settings
 using namespace gldef;
 ExampleTexture01::ExampleTexture01()
@@ -87,14 +85,15 @@ void ExampleTexture01::run()
     shaderTool->setInt("texture1", 0);
     shaderTool->setInt("texture2", 1); // 或者使用着色器类设置
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    GLMatrix* gl_mat = new GLMatrix(Eigen::Matrix4f::Identity());
-    Eigen::Vector3f v1;
-    v1 << -0.1, -0.25, 0;
-    Eigen::Vector3f v2;
-    v2 << 0.1, 0.25, 0;
-    gl_mat->Translation(v1);
-    gl_mat->RotationWithAxis(30, {0,0,1});
-    gl_mat->Translation(v2);
+    std::unique_ptr<GLMatrix> gl_model = std::make_unique<GLMatrix>(Eigen::Matrix4f::Identity());
+    std::unique_ptr<GLMatrix> gl_view = std::make_unique<GLMatrix>(Eigen::Matrix4f::Identity());
+    std::unique_ptr<GLMatrix> gl_projection = std::make_unique<GLMatrix>(Eigen::Matrix4f::Identity());
+    //model transformation
+    gl_model->RotationWithAxis(45, {1,0,0});
+    //view transformation
+    gl_view->CameraTransform({ 0, 0, -3.f }, { 0, 0, 1 }, { 1, -1, 0 });
+    //perspective projection transformation
+    gl_projection->PerProjection(45,(float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f,1000.0f);
 
 
     while (!glfwWindowShouldClose(window))
@@ -105,10 +104,20 @@ void ExampleTexture01::run()
         // render
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        shaderTool->Use();
 
         unsigned int Loc = glGetUniformLocation(shaderProgram, "transform");
 
-        glUniformMatrix4fv(Loc, 1, GL_FALSE, gl_mat->GLMatFormat());
+        //glUniformMatrix4fv(Loc, 1, GL_FALSE, gl_mat->GLMatFormat());
+        unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
+        unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
+        unsigned int projLoc = glGetUniformLocation(shaderProgram, "projection");
+
+         //pass them to the shaders (3 different ways)
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, gl_model->GLMatFormat());
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, gl_view->GLMatFormat());
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, gl_projection->GLMatFormat());
+
         glActiveTexture(GL_TEXTURE0); // 在绑定纹理之前先激活纹理单元
         glBindTexture(GL_TEXTURE_2D, texture1);
 
