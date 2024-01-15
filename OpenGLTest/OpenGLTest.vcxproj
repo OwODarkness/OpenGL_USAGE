@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\download\glad\src\glad.c" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CommonUtils.cpp" />
     <ClCompile Include="ExampleTexture01.cpp" />
     <ClCompile Include="ExampleTriangle01.cpp" />
@@ -150,6 +151,7 @@
     <None Include="TriangleVertexShader.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonDefs.h" />
     <ClInclude Include="CommonUtils.h" />
     <ClInclude Include="ExampleTexture01.h" />

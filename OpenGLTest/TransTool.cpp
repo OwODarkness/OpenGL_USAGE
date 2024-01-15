@@ -41,6 +41,11 @@ void GLMatrix::Translation(const Eigen::Vector3f& vec)
 	delete tmp;
 }
 
+void GLMatrix::SetLocation(const Eigen::Vector3f& vec)
+{
+	mat->block(0, 3, 3, 1) = vec;
+}
+
 void  GLMatrix::RotationWithAxis(float angle, const Eigen::Vector3f& vec)
 {
 	Eigen::Matrix4f* tmp = new Eigen::Matrix4f(Eigen::Matrix4f::Identity());
@@ -109,37 +114,25 @@ void  GLMatrix::ViewPortTransform(float screen_w, float screen_h)
 void GLMatrix::CameraTransform(const Eigen::Vector3f& Loc, const Eigen::Vector3f& LookAtDir, const Eigen::Vector3f& ViewUpDir)
 {
 	//Move To origin point
-	Eigen::Matrix4f* tmp = new Eigen::Matrix4f(Eigen::Matrix4f::Identity());
-	tmp->block(0, 3, 3, 1) = -Loc;
+	Eigen::Matrix4f* tmp = new Eigen::Matrix4f(GetCameraTransformationMatrix(Loc, LookAtDir, ViewUpDir));
 	*mat = (*tmp) * (*mat);
-
-	//Rotate to the origin base axis
-	*tmp = Eigen::Matrix4f::Identity();
-	//x axis in camera coor
-	Eigen::Vector3f* u = new Eigen::Vector3f();
-	//y axis in camera coor
-	Eigen::Vector3f* v = new Eigen::Vector3f();
-	//z axis in camera coor
-	Eigen::Vector3f* w = new Eigen::Vector3f();
-	//orthonalization
-	*w = -LookAtDir / LookAtDir.norm();
-	Eigen::Vector3f* cross_tmp = new Eigen::Vector3f();
-	*cross_tmp = ViewUpDir.cross(*w);
-	*u = *cross_tmp / cross_tmp->norm();
-	*v = w->cross(*u);
-	tmp->block(0, 0, 3, 1) = *u;
-	tmp->block(0, 1, 3, 1) = *v;
-	tmp->block(0, 2, 3, 1) = *w;
-	*mat = tmp->transpose() * (*mat);
 	if (debug_flag)
 	{
 		Debug(*tmp, "View Transformation");
 	}
 	delete tmp;
-	delete u;
-	delete w;
-	delete v;
-	delete cross_tmp;
+}
+
+void GLMatrix::SetCameraTransform(const Eigen::Vector3f& Loc, const Eigen::Vector3f& LookAtDir, const Eigen::Vector3f& ViewUpDir)
+{
+	Eigen::Matrix4f* tmp = new Eigen::Matrix4f(GetCameraTransformationMatrix(Loc, LookAtDir, ViewUpDir));
+
+	if (debug_flag)
+	{
+		Debug(*tmp, "View Transformation");
+	}
+	*mat = *tmp;
+	delete tmp;
 }
 
 void GLMatrix::OrthProjection(const Eigen::Vector3f& pot_rbn, const Eigen::Vector3f& pot_ltf)
@@ -214,4 +207,30 @@ void GLMatrix::Debug(const Eigen::Matrix4f& m, std::string debug_message)
 		std::cout << debug_message << std::endl;
 	}
 	std::cout  << m << std::endl;
+}
+
+Eigen::Matrix4f GLMatrix::GetCameraTransformationMatrix(const Eigen::Vector3f& Loc, const Eigen::Vector3f& LookAtDir, const Eigen::Vector3f& ViewUpDir)
+{
+	Eigen::Matrix4f tmp1 = Eigen::Matrix4f::Identity();
+	tmp1.block(0, 3, 3, 1) = -Loc;
+	//Rotate to the origin base axis
+	Eigen::Matrix4f tmp2 = Eigen::Matrix4f::Identity();
+
+	//x axis in camera coor	*tmp = Eigen::Matrix4f::Identity();
+	Eigen::Vector3f u;
+	//y axis in camera coor
+	Eigen::Vector3f v;
+	//z axis in camera coor
+	Eigen::Vector3f w;
+	//orthonalization
+	w = -LookAtDir / LookAtDir.norm();
+	Eigen::Vector3f cross_tmp;
+	cross_tmp = ViewUpDir.cross(w);
+	u = cross_tmp / cross_tmp.norm();
+	v = w.cross(u);
+	tmp2.block(0, 0, 3, 1) = u;
+	tmp2.block(0, 1, 3, 1) = v;
+	tmp2.block(0, 2, 3, 1) = w;
+
+	return tmp2.transpose() * tmp1;
 }

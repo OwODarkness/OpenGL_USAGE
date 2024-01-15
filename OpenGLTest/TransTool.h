@@ -15,6 +15,8 @@ public:
 	float* GLMatFormat() const;
 	//位移
 	void Translation(const Eigen::Vector3f& vec);
+	//指定位置
+	void SetLocation(const Eigen::Vector3f& vec);
 	//绕轴旋转
 	void RotationWithAxis(float angle, const Eigen::Vector3f& vec);
 	//缩放
@@ -28,7 +30,8 @@ public:
 	//视口变换
 	void ViewPortTransform(float screen_w, float screen_h);
 	//摄像机变换 View Transform
-	void CameraTransform(const Eigen::Vector3f& Loc, const Eigen::Vector3f& LookAtDir = Eigen::Vector3f(0,1,0), const Eigen::Vector3f& ViewUpDir = Eigen::Vector3f(0, 1, 0));
+	void CameraTransform(const Eigen::Vector3f& Loc, const Eigen::Vector3f& LookAtDir = Eigen::Vector3f(0,0,1), const Eigen::Vector3f& ViewUpDir = Eigen::Vector3f(0, 1, 0));
+	void SetCameraTransform(const Eigen::Vector3f& Loc, const Eigen::Vector3f& LookAtDir, const Eigen::Vector3f& ViewUpDir);
 	//正交投影 
 	void OrthProjection(const Eigen::Vector3f& pot_rbn, const Eigen::Vector3f& pot_ltf);
 	//透视投影 
@@ -41,5 +44,8 @@ public:
 
 public:
 	static void Debug(const Eigen::Matrix4f& m, std::string debug = "");
+
+private:
+	Eigen::Matrix4f GetCameraTransformationMatrix(const Eigen::Vector3f& Loc, const Eigen::Vector3f& LookAtDir, const Eigen::Vector3f& ViewUpDir);
 };
 #endif // !TRANS_TOOL_H
